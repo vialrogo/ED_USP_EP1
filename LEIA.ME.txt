@@ -1,0 +1,16 @@
+LEIA.ME.txt
+===========
+
+Exercício de Programação 1 de Estruturas de Dados e sua Manipulação na USP como Routo Terada
+
+Nome: Victor Alberto Romero Gonzalez
+NUSP: 8405274
+
+Arquivos:
+--
+
+- Descrição sucinta de como usar o executável em linha de comandos
+
+- Computador (máquina), compilador e SO usado para compilar o programa
+
+- Instruções de como compilar os arquivos fonte

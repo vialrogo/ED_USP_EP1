@@ -12,12 +12,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 
+#define TYPE int
+
 typedef struct Queue Queue;
 
 /* Function definition */
 Queue* createQueue();
-void enqueue(struct Queue*, int);
-int  dequeue(struct Queue*);
-int  first  (struct Queue*);
+void enqueue(struct Queue*, TYPE);
+TYPE  dequeue(struct Queue*);
+TYPE  first  (struct Queue*);
 
 #endif

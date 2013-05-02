@@ -13,7 +13,7 @@
 
 typedef struct Node
 {
-    int data;
+    TYPE data;
     struct Node* next;
 }Node;
 
@@ -23,13 +23,13 @@ typedef struct Queue
     Node* head;
     Node* tail;
 
-    void (*enqueue) (struct Queue*, int);   /* Add a element to the end */
-    int  (*dequeue) (struct Queue*);        /* Remove and return the first element */
-    int  (*first)   (struct Queue*);        /* Get the first element, but not remove */
+    void (*enqueue) (struct Queue*, TYPE);   /* Add a element to the end */
+    TYPE  (*dequeue) (struct Queue*);        /* Remove and return the first element */
+    TYPE  (*first)   (struct Queue*);        /* Get the first element, but not remove */
 
 }Queue;
 
-void enqueue(struct Queue* queue, int element)
+void enqueue(struct Queue* queue, TYPE element)
 {
     /* Creating a new node*/
     Node* newNode = (Node*) malloc(sizeof(Node));
@@ -45,14 +45,14 @@ void enqueue(struct Queue* queue, int element)
     queue->size++;
 }
 
-int  dequeue(struct Queue* queue)
+TYPE  dequeue(struct Queue* queue)
 {
     if(queue->size == 0) 
         printf("Try to dequeu a empty queue, you must garant that this will not happen again\n");
 
     /* Get Data*/
     Node* oldHead = queue->head;
-    int data = oldHead->data;
+    TYPE data = oldHead->data;
     
     /* Update a Queue*/
     queue->head = oldHead->next;
@@ -63,12 +63,11 @@ int  dequeue(struct Queue* queue)
     return data;
 }
 
-int  first  (struct Queue* queue)
+TYPE  first  (struct Queue* queue)
 {
     if(queue->size == 0) 
         printf("Try to get the first of a empty queue, you must garant that this will not happen again\n");
     
-    /* Return data ou error*/
     return queue->head->data;
 }
 

@@ -47,7 +47,6 @@ int main(int argc, char *argv[])
     printf("%d \n",dequeue(queue));
     printf("%d \n",dequeue(queue));
     printf("%d \n",dequeue(queue));
-    printf("%d \n",dequeue(queue));
 
     return 0;
 }

@@ -16,8 +16,9 @@ typedef struct QueueInt QueueInt;
 
 /* Function definition */
 QueueInt* createQueueInt();
-void enqueue(struct QueueInt*, int);
-int dequeue(struct QueueInt*);
-int first  (struct QueueInt*);
+void enqueueInt(struct QueueInt*, int);
+int  dequeueInt(struct QueueInt*);
+int  firstInt  (struct QueueInt*);
+int  getSizeInt(struct QueueInt*);
 
 #endif

@@ -1,17 +1,16 @@
 #include <stdio.h>
 #include "queue_int.h"
+#include "queue_city.h"
 
-int main(int argc, char *argv[])
+void testFileIO(char* inputFileName, char* outputFileName)
 {
-/*    FILE* fileIn;
+    FILE* fileIn;
     FILE* fileOut;
-    char* NomeArquivoEntrada = argv[1];
-    char* NomeArquivoSaida = argv[2];
 
-    * Leitura do arquivo*
+    /* File reader */
     int i = 0;
     
-    fileIn = fopen (NomeArquivoEntrada,"r");
+    fileIn = fopen (inputFileName, "r");
     fscanf (fileIn, "%d", &i);
 
     while(!feof (fileIn))
@@ -22,31 +21,76 @@ int main(int argc, char *argv[])
 
     fclose(fileIn);
 
-    * Escritura do arquivo*
-    fileOut = fopen(NomeArquivoSaida, "w");
+    /* File writer */
+    fileOut = fopen(outputFileName, "w");
 
     if(fileOut==NULL)
     {
-        printf("Não pode abrir o arquivo de saida!\n");
-        return 1;
+        printf("Cannot open the output file!\n");
     }
 
-    fputs("Hola mundo\n", fileOut);
+    fputs("Hello World\n", fileOut);
     fclose(fileOut);
-*/
-    QueueInt* queue = createQueueInt();
+}
+
+void testQueueInt()
+{
+    QueueInt* queue = createQueueInt();    
+    enqueueInt(queue,5);
+    printf("%d \n",firstInt(queue));
+    enqueueInt(queue,4);
+    printf("%d \n",dequeueInt(queue));
+    enqueueInt(queue,1);
+    enqueueInt(queue,2);
+    enqueueInt(queue,9);
+    printf("Size: %d \n",getSizeInt(queue));
+    printf("%d \n",dequeueInt(queue));
+    printf("%d \n",dequeueInt(queue));
+    printf("%d \n",dequeueInt(queue));
+    printf("%d \n",dequeueInt(queue));
+}
+
+void testQueueCity()
+{
+    QueueCity* queue = createQueueCity();
     
-    enqueue(queue,5);
-    printf("%d \n",first(queue));
-    enqueue(queue,4);
-    printf("%d \n",dequeue(queue));
-    enqueue(queue,1);
-    enqueue(queue,2);
-    enqueue(queue,9);
-    printf("%d \n",dequeue(queue));
-    printf("%d \n",dequeue(queue));
-    printf("%d \n",dequeue(queue));
-    printf("%d \n",dequeue(queue));
+    City* newCity = createCity();
+    enqueueInt(getPathCity(newCity),1);
+    enqueueInt(getPathCity(newCity),3);
+    enqueueInt(getPathCity(newCity),2);
+    enqueueCity(queue,newCity);
+
+    newCity = createCity();
+    enqueueInt(getPathCity(newCity),4);
+    enqueueInt(getPathCity(newCity),5);
+    enqueueCity(queue,newCity);
+
+    dequeueCity(queue);
+
+    newCity = createCity();
+    enqueueInt(getPathCity(newCity),6);
+    enqueueInt(getPathCity(newCity),7);
+    enqueueInt(getPathCity(newCity),8);
+    enqueueInt(getPathCity(newCity),9);
+    enqueueCity(queue,newCity);
+
+    dequeueCity(queue);
+
+    int i;
+    int size = getSizeInt(getPathCity(firstCity(queue))); 
+    for(i=0; i<size; i++)
+        printf("%d\n",dequeueInt(getPathCity(firstCity(queue))));
+}
+
+int main(int argc, char *argv[])
+{
+    /*char* inputFileName  = argv[1];
+    char* outputFileName = argv[2];
+    testFileIO(inputFileName,outputFileName);*/
+
+    /*testQueueInt();*/
+
+    /*testQueueCity();*/
 
     return 0;
 }

@@ -23,13 +23,14 @@ typedef struct QueueInt
     NodeInt* head;
     NodeInt* tail;
 
-    void (*enqueue) (struct QueueInt*, int);   /* Add a element to the end */
-    int  (*dequeue) (struct QueueInt*);        /* Remove and return the first element */
-    int  (*first)   (struct QueueInt*);        /* Get the first element, but not remove */
-
+    void (*enqueueInt) (struct QueueInt*, int); /* Add a element to the end */
+    int  (*dequeueInt) (struct QueueInt*);      /* Remove and return the first element */
+    int  (*firstInt)   (struct QueueInt*);      /* Get the first element, but not remove */
+    int  (*getSizeInt) (struct QueueInt*);      /* Get a current size of a queue */
+    
 }QueueInt;
 
-void enqueue(struct QueueInt* queue, int element)
+void enqueueInt(struct QueueInt* queue, int element)
 {
     /* Creating a new node*/
     NodeInt* newNode = (NodeInt*) malloc(sizeof(NodeInt));
@@ -45,10 +46,10 @@ void enqueue(struct QueueInt* queue, int element)
     queue->size++;
 }
 
-int  dequeue(struct QueueInt* queue)
+int dequeueInt(struct QueueInt* queue)
 {
     if(queue->size == 0) 
-        printf("Try to dequeu a empty queue, you must garant that this will not happen again\n");
+        printf("Tried to dequeu a empty queue, you must garant that this will not happen again\n");
 
     /* Get Data*/
     NodeInt* oldHead = queue->head;
@@ -63,12 +64,17 @@ int  dequeue(struct QueueInt* queue)
     return data;
 }
 
-int  first  (struct QueueInt* queue)
+int firstInt(struct QueueInt* queue)
 {
     if(queue->size == 0) 
-        printf("Try to get the first of a empty queue, you must garant that this will not happen again\n");
+        printf("Tried to get the first of a empty queue, you must garant that this will not happen again\n");
     
     return queue->head->data;
+}
+
+int getSizeInt(QueueInt* queue)
+{
+    return queue->size;
 }
 
 QueueInt* createQueueInt()
@@ -77,8 +83,8 @@ QueueInt* createQueueInt()
     queue->size = 0;
     queue->head = NULL;
     queue->tail = NULL;
-    queue->enqueue = &enqueue;
-    queue->dequeue = &dequeue;
-    queue->first = &first;
+    queue->enqueueInt = &enqueueInt;
+    queue->dequeueInt = &dequeueInt;
+    queue->firstInt = &firstInt;
     return queue;
 }

@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include <stdlib.h>
+/*#include "queue.h"*/
 
 int main(int argc, char *argv[])
 {
@@ -24,9 +24,11 @@ int main(int argc, char *argv[])
 
     /* Escritura do arquivo*/
     fileOut = fopen(NomeArquivoSaida, "w");
-    if(fileOut==NULL){
+
+    if(fileOut==NULL)
+    {
         printf("Não pode abrir o arquivo de saida!\n");
-        exit(8);
+        return 1;
     }
 
     fputs("Hola mundo\n", fileOut);

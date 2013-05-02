@@ -9,6 +9,8 @@
  *                  (integer) and the pointer to the next Node.
  */
 
+#include "queue.h"
+
 typedef struct Node
 {
     int data;
@@ -29,20 +31,55 @@ typedef struct Queue
 
 void enqueue(struct Queue* queue, int element)
 {
+    /* Creating a new node*/
+    Node* newNode = (Node*) malloc(sizeof(Node));
+    newNode->data = element;
+    newNode->next = NULL;
+    
+    /* Putting the new node in the queue */
+    if(queue->head == NULL) queue->head = newNode;
+    else queue->tail->next = newNode;
+
+    /* Updating the queue with the new node and size*/
+    queue->tail = newNode;
+    queue->size++;
 }
 
 int  dequeue(struct Queue* queue)
 {
-    return 5;
+    if(queue->size == 0) 
+        printf("Try to dequeu a empty queue, you must garant that this will not happen again\n");
+
+    /* Get Data*/
+    Node* oldHead = queue->head;
+    int data = oldHead->data;
+    
+    /* Update a Queue*/
+    queue->head = oldHead->next;
+    queue->size--;
+    
+    /* Free memory and return */
+    free(oldHead);
+    return data;
 }
 
 int  first  (struct Queue* queue)
 {
-    return 7;
+    if(queue->size == 0) 
+        printf("Try to get the first of a empty queue, you must garant that this will not happen again\n");
+    
+    /* Return data ou error*/
+    return queue->head->data;
 }
 
 Queue* createQueue()
 {
-    Queue* queue;
+    Queue* queue = (Queue*) malloc(sizeof(Queue));
+    queue->size = 0;
+    queue->head = NULL;
+    queue->tail = NULL;
+    queue->enqueue = &enqueue;
+    queue->dequeue = &dequeue;
+    queue->first = &first;
     return queue;
 }

@@ -3,12 +3,12 @@
 
 int main(int argc, char *argv[])
 {
-    FILE* fileIn;
+/*    FILE* fileIn;
     FILE* fileOut;
     char* NomeArquivoEntrada = argv[1];
     char* NomeArquivoSaida = argv[2];
 
-    /* Leitura do arquivo*/
+    * Leitura do arquivo*
     int i = 0;
     
     fileIn = fopen (NomeArquivoEntrada,"r");
@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
     fclose(fileIn);
 
-    /* Escritura do arquivo*/
+    * Escritura do arquivo*
     fileOut = fopen(NomeArquivoSaida, "w");
 
     if(fileOut==NULL)
@@ -33,11 +33,21 @@ int main(int argc, char *argv[])
 
     fputs("Hola mundo\n", fileOut);
     fclose(fileOut);
-
+*/
     Queue* queue = createQueue();
-    int a = dequeue(queue);
-    int b = first(queue);
-    printf("%d %d\n",a,b);
+    
+    enqueue(queue,5);
+    printf("%d \n",first(queue));
+    enqueue(queue,4);
+    printf("%d \n",dequeue(queue));
+    enqueue(queue,1);
+    enqueue(queue,2);
+    enqueue(queue,9);
+    printf("%d \n",dequeue(queue));
+    printf("%d \n",dequeue(queue));
+    printf("%d \n",dequeue(queue));
+    printf("%d \n",dequeue(queue));
+    printf("%d \n",dequeue(queue));
 
     return 0;
 }

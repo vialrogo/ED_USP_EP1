@@ -1,29 +1,36 @@
 #include <stdio.h>
-
-FILE* file;
+#include <stdlib.h>
 
 int main(int argc, char *argv[])
 {
-    char* NomeArquivoEntrada;
-    char* NomeArquivoSaida;
-
-    NomeArquivoEntrada = argv[1];
-    NomeArquivoSaida = argv[2];
+    FILE* fileIn;
+    FILE* fileOut;
+    char* NomeArquivoEntrada = argv[1];
+    char* NomeArquivoSaida = argv[2];
 
     /* Leitura do arquivo*/
-    
     int i = 0;
     
-    file = fopen (NomeArquivoEntrada,"r");
-    fscanf (file, "%d", &i);
+    fileIn = fopen (NomeArquivoEntrada,"r");
+    fscanf (fileIn, "%d", &i);
 
-    while(!feof (file))
+    while(!feof (fileIn))
     {
         printf("%d\n", i);
-        fscanf (file, "%d", &i);
+        fscanf (fileIn, "%d", &i);
     }
 
+    fclose(fileIn);
 
-    fclose(file);
+    /* Escritura do arquivo*/
+    fileOut = fopen(NomeArquivoSaida, "w");
+    if(fileOut==NULL){
+        printf("Não pode abrir o arquivo de saida!\n");
+        exit(8);
+    }
+
+    fputs("Hola mundo\n", fileOut);
+    fclose(fileOut);
+
     return 0;
 }

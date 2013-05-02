@@ -1,5 +1,5 @@
 /*
- * queue.c          file with definition and all functions of Queue
+ * queue.c          File with all functions of Queue
  * Create by:       Victor Alberto Romero Gonzalez
  *
  * Struct Queue:    Queue of integers. Has the basics methods of a queue. Its
@@ -27,28 +27,22 @@ typedef struct Queue
 
 }Queue;
 
-/* Function definition */
-void enqueue(struct Queue*, int);
-int  dequeue(struct Queue*);
-int  first  (struct Queue*);
-Queue createQueue();
-
 void enqueue(struct Queue* queue, int element)
 {
 }
 
 int  dequeue(struct Queue* queue)
 {
-    return 0;
+    return 5;
 }
 
 int  first  (struct Queue* queue)
 {
-    return 0;
+    return 7;
 }
 
-Queue createQueue()
+Queue* createQueue()
 {
-    Queue queue;
+    Queue* queue;
     return queue;
 }

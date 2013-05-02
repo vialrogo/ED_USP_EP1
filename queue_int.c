@@ -1,38 +1,38 @@
 /*
- * queue.c          File with all functions of Queue
+ * queue_int.c      File with all functions of Queue of int
  * Create by:       Victor Alberto Romero Gonzalez
  *
- * Struct Queue:    Queue of integers. Has the basics methods of a queue. Its
+ * Struct QueueInt: Queue of integers. Has the basics methods of a queue. Its
  *                  implements with pointers
  *
- * Struct Node:     It's a auxiliar structure for Queue. Contain a data
+ * Struct NodeInt:  It's a auxiliar structure for Queue. Contain a data
  *                  (integer) and the pointer to the next Node.
  */
 
-#include "queue.h"
+#include "queue_int.h"
 
-typedef struct Node
+typedef struct NodeInt
 {
-    TYPE data;
-    struct Node* next;
-}Node;
+    int data;
+    struct NodeInt* next;
+}NodeInt;
 
-typedef struct Queue
+typedef struct QueueInt
 {
     int size;
-    Node* head;
-    Node* tail;
+    NodeInt* head;
+    NodeInt* tail;
 
-    void (*enqueue) (struct Queue*, TYPE);   /* Add a element to the end */
-    TYPE  (*dequeue) (struct Queue*);        /* Remove and return the first element */
-    TYPE  (*first)   (struct Queue*);        /* Get the first element, but not remove */
+    void (*enqueue) (struct QueueInt*, int);   /* Add a element to the end */
+    int  (*dequeue) (struct QueueInt*);        /* Remove and return the first element */
+    int  (*first)   (struct QueueInt*);        /* Get the first element, but not remove */
 
-}Queue;
+}QueueInt;
 
-void enqueue(struct Queue* queue, TYPE element)
+void enqueue(struct QueueInt* queue, int element)
 {
     /* Creating a new node*/
-    Node* newNode = (Node*) malloc(sizeof(Node));
+    NodeInt* newNode = (NodeInt*) malloc(sizeof(NodeInt));
     newNode->data = element;
     newNode->next = NULL;
     
@@ -45,14 +45,14 @@ void enqueue(struct Queue* queue, TYPE element)
     queue->size++;
 }
 
-TYPE  dequeue(struct Queue* queue)
+int  dequeue(struct QueueInt* queue)
 {
     if(queue->size == 0) 
         printf("Try to dequeu a empty queue, you must garant that this will not happen again\n");
 
     /* Get Data*/
-    Node* oldHead = queue->head;
-    TYPE data = oldHead->data;
+    NodeInt* oldHead = queue->head;
+    int data = oldHead->data;
     
     /* Update a Queue*/
     queue->head = oldHead->next;
@@ -63,7 +63,7 @@ TYPE  dequeue(struct Queue* queue)
     return data;
 }
 
-TYPE  first  (struct Queue* queue)
+int  first  (struct QueueInt* queue)
 {
     if(queue->size == 0) 
         printf("Try to get the first of a empty queue, you must garant that this will not happen again\n");
@@ -71,9 +71,9 @@ TYPE  first  (struct Queue* queue)
     return queue->head->data;
 }
 
-Queue* createQueue()
+QueueInt* createQueueInt()
 {
-    Queue* queue = (Queue*) malloc(sizeof(Queue));
+    QueueInt* queue = (QueueInt*) malloc(sizeof(QueueInt));
     queue->size = 0;
     queue->head = NULL;
     queue->tail = NULL;

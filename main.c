@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "queue.h"
+#include "queue_int.h"
 
 int main(int argc, char *argv[])
 {
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     fputs("Hola mundo\n", fileOut);
     fclose(fileOut);
 */
-    Queue* queue = createQueue();
+    QueueInt* queue = createQueueInt();
     
     enqueue(queue,5);
     printf("%d \n",first(queue));

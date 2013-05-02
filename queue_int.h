@@ -1,25 +1,23 @@
 /*
- * queue.h          File with definition of Queue
+ * queue_int.h      File with definition of Queue of int
  * Create by:       Victor Alberto Romero Gonzalez
  *
  * Struct Queue:    Queue of integers. Has the basics methods of a queue. Its
  *                  implements with pointers
  */
 
-#ifndef QUEUE_H
-#define QUEUE_H
+#ifndef QUEUE_INT_H
+#define QUEUE_INT_H
 
 #include <stdlib.h>
 #include <stdio.h>
 
-#define TYPE int
-
-typedef struct Queue Queue;
+typedef struct QueueInt QueueInt;
 
 /* Function definition */
-Queue* createQueue();
-void enqueue(struct Queue*, TYPE);
-TYPE  dequeue(struct Queue*);
-TYPE  first  (struct Queue*);
+QueueInt* createQueueInt();
+void enqueue(struct QueueInt*, int);
+int dequeue(struct QueueInt*);
+int first  (struct QueueInt*);
 
 #endif

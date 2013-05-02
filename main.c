@@ -84,12 +84,30 @@ void testQueueCity()
 
 int main(int argc, char *argv[])
 {
-    /*char* inputFileName  = argv[1];
+    if(argc<2)
+    {
+        printf("Incorrect number of parameters!\n");
+        return 1;
+    }
+
+    char* inputFileName  = argv[1];
     char* outputFileName = argv[2];
-    testFileIO(inputFileName,outputFileName);*/
 
+    int size=5;
+    int* array = (int*)malloc(sizeof(int)*size);
+
+    array[0]=880394;
+    array[1]=50394;
+    array[2]=49394;
+    array[3]=230394;
+    array[4]=37394;
+
+    int i;
+    for(i=0;i<size;i++) printf("%d ",array[i]);
+    printf("\n");
+
+    /*testFileIO(inputFileName,outputFileName);*/
     /*testQueueInt();*/
-
     /*testQueueCity();*/
 
     return 0;

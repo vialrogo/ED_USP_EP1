@@ -27,10 +27,10 @@ QueueInt* getPathCity(struct City* city)
     return city->pathCity;
 }
 
-City* createCity()
+City* createCity(int idCityIn)
 {
     City* city     = (City*) malloc(sizeof(City));
-    city->idCity   = 0;
+    city->idCity   = idCityIn;
     city->pathCity = createQueueInt();
     return city;
 }

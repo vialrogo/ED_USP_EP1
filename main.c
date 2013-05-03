@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include "queue_int.h"
 #include "queue_city.h"
-
+#include "city.h"
 
 /* Global variables*/
 const int maxNumberOfCities=1000; /* Giving by the problem*/
 QueueInt** cityRoutes;
+short* visitedCities;
 
 void testFileIO(char* outputFileName)
 {
@@ -21,55 +22,6 @@ void testFileIO(char* outputFileName)
 
     fputs("Hello World\n", fileOut);
     fclose(fileOut);
-}
-
-void testQueueInt()
-{
-    QueueInt* queue = createQueueInt();    
-    enqueueInt(queue,5);
-    printf("%d \n",firstInt(queue));
-    enqueueInt(queue,4);
-    printf("%d \n",dequeueInt(queue));
-    enqueueInt(queue,1);
-    enqueueInt(queue,2);
-    enqueueInt(queue,9);
-    printf("Size: %d \n",getSizeInt(queue));
-    printf("%d \n",dequeueInt(queue));
-    printf("%d \n",dequeueInt(queue));
-    printf("%d \n",dequeueInt(queue));
-    printf("%d \n",dequeueInt(queue));
-}
-
-void testQueueCity()
-{
-    QueueCity* queue = createQueueCity();
-    
-    City* newCity = createCity();
-    enqueueInt(getPathCity(newCity),1);
-    enqueueInt(getPathCity(newCity),3);
-    enqueueInt(getPathCity(newCity),2);
-    enqueueCity(queue,newCity);
-
-    newCity = createCity();
-    enqueueInt(getPathCity(newCity),4);
-    enqueueInt(getPathCity(newCity),5);
-    enqueueCity(queue,newCity);
-
-    dequeueCity(queue);
-
-    newCity = createCity();
-    enqueueInt(getPathCity(newCity),6);
-    enqueueInt(getPathCity(newCity),7);
-    enqueueInt(getPathCity(newCity),8);
-    enqueueInt(getPathCity(newCity),9);
-    enqueueCity(queue,newCity);
-
-    dequeueCity(queue);
-
-    int i;
-    int size = getSizeInt(getPathCity(firstCity(queue))); 
-    for(i=0; i<size; i++)
-        printf("%d\n",dequeueInt(getPathCity(firstCity(queue))));
 }
 
 void readInputFile(char* inputFileName)
@@ -91,11 +43,73 @@ void readInputFile(char* inputFileName)
     }
 
     fclose(fileIn);
+    fileIn=0;
+}
+
+void calculateMinimalRoutes()
+{
+    QueueCity* queueOfCities = createQueueCity();
+    enqueueCity(queueOfCities,createCity(0));
+
+    int i,j,tmp;
+    int numberOfNeighbors;
+    int currentNeighbor;
+    int sizeOfCurrentPath;
+    int idCurrentCity;
+    City* currentCity;
+    QueueInt* neighbors;
+
+    while(getSizeCity(queueOfCities)>0)
+    {
+        currentCity = dequeueCity(queueOfCities);
+        idCurrentCity = getIDCity(currentCity);
+
+        if(visitedCities[idCurrentCity]==0)
+        {
+            neighbors = cityRoutes[idCurrentCity];
+            numberOfNeighbors = getSizeInt(neighbors);
+            
+            /* For all neighbors create a city with the updating path*/
+            for(i=0; i<numberOfNeighbors; i++)
+            {
+                /* Create a new city*/
+                currentNeighbor = dequeueInt(neighbors);
+                City* newCity = createCity(currentNeighbor);
+               
+                /* Update the path of the new city*/
+                sizeOfCurrentPath = getSizeInt(getPathCity(currentCity));
+                for(j=0; j<sizeOfCurrentPath; j++)
+                {
+                    tmp = dequeueInt(getPathCity(currentCity));
+                    enqueueInt(getPathCity(currentCity),tmp);
+                    enqueueInt(getPathCity(newCity),tmp);
+                }
+                enqueueInt(getPathCity(newCity),idCurrentCity);
+                
+                /* Enqueue the new City*/
+                enqueueCity(queueOfCities,newCity);
+            }
+           
+            /* Free the neighbors queue and then assing this pointer to the
+             * minimal path. Last, mark the city like visited*/
+            free(cityRoutes[idCurrentCity]);
+            cityRoutes[idCurrentCity] = getPathCity(currentCity);
+            visitedCities[idCurrentCity] = 1;
+        }
+        else
+        {
+            /* Free currentPath because isnt the minimal path */
+            free(getPathCity(currentCity));
+        }
+
+        /* Free the currentCity after process it */
+        free(currentCity);
+    }
 }
 
 int main(int argc, char *argv[])
 {
-    /* Correcto number of parameters? */
+    /* Correct number of parameters? */
     if(argc<2)
     {
         printf("Incorrect number of parameters!\n");
@@ -104,23 +118,32 @@ int main(int argc, char *argv[])
     char* inputFileName  = argv[1];
     char* outputFileName = argv[2];
 
-    /* Initialization of cityRoutes */
-    cityRoutes = (QueueInt**)malloc(sizeof(QueueInt*)*maxNumberOfCities);
+    /* Initialization of cityRoutes and visitedCities*/
+    cityRoutes =    (QueueInt**)malloc(sizeof(QueueInt*)*maxNumberOfCities);
+    visitedCities = (short*)malloc(sizeof(short)*maxNumberOfCities);
     int i;
     for(i=0; i<maxNumberOfCities; i++)
+    {
         cityRoutes[i] = createQueueInt();
+        visitedCities[i] = 0;
+    }
 
     /* Read input file */
     readInputFile(inputFileName);
 
+    calculateMinimalRoutes();
+
     
-    int j;      
-    for(i=0; i<20; i++)
+    int j,tmp;      
+    for(i=0; i<10; i++)
     {
-        for(j=0; j<getSizeInt(cityRoutes[i]); j++)
+        tmp = getSizeInt(cityRoutes[i]);
+        for(j=0; j<tmp; j++)
             printf("%d ",dequeueInt(cityRoutes[i]));
         printf("\n");
     }
+
+    /* Memory free */
 
     return 0;
 }

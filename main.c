@@ -8,7 +8,7 @@ const int maxNumberOfCities=1000; /* Giving by the problem*/
 QueueInt** cityRoutes;
 short* visitedCities;
 
-void testFileIO(char* outputFileName)
+void writeOutputFile(char* outputFileName)
 {
    /* File writer */
     FILE* fileOut;
@@ -42,15 +42,18 @@ void readInputFile(char* inputFileName)
         fscanf (fileIn, "%d", &to);
     }
 
+    /* Close file, and zering pointer*/
     fclose(fileIn);
     fileIn=0;
 }
 
 void calculateMinimalRoutes()
 {
+    /* Create a queue of cities*/
     QueueCity* queueOfCities = createQueueCity();
     enqueueCity(queueOfCities,createCity(0));
 
+    /* Create a temporal variables*/
     int i,j,tmp;
     int numberOfNeighbors;
     int currentNeighbor;
@@ -61,11 +64,13 @@ void calculateMinimalRoutes()
 
     while(getSizeCity(queueOfCities)>0)
     {
+        /* Dequeue the current city */
         currentCity = dequeueCity(queueOfCities);
         idCurrentCity = getIDCity(currentCity);
 
         if(visitedCities[idCurrentCity]==0)
         {
+            /* Extract the neighbors */
             neighbors = cityRoutes[idCurrentCity];
             numberOfNeighbors = getSizeInt(neighbors);
             
@@ -135,12 +140,17 @@ int main(int argc, char *argv[])
 
     
     int j,tmp;      
-    for(i=0; i<200; i++)
+    for(i=0; i<maxNumberOfCities; i++)
     {
         tmp = getSizeInt(cityRoutes[i]);
-        for(j=0; j<tmp; j++)
-            printf("%d ",dequeueInt(cityRoutes[i]));
-        printf("\n");
+
+        if(tmp>0 || i==0)
+        {
+            printf("Cidade %d %d ",i,tmp);
+            for(j=0; j<tmp; j++)
+                printf("%d ",dequeueInt(cityRoutes[i]));
+            printf("\n");
+        }
     }
 
     /* Memory free */

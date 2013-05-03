@@ -2,26 +2,16 @@
 #include "queue_int.h"
 #include "queue_city.h"
 
-void testFileIO(char* inputFileName, char* outputFileName)
+
+/* Global variables*/
+const int maxNumberOfCities=1000; /* Giving by the problem*/
+QueueInt** cityRoutes;
+
+void testFileIO(char* outputFileName)
 {
-    FILE* fileIn;
+   /* File writer */
     FILE* fileOut;
-
-    /* File reader */
-    int i = 0;
     
-    fileIn = fopen (inputFileName, "r");
-    fscanf (fileIn, "%d", &i);
-
-    while(!feof (fileIn))
-    {
-        printf("%d\n", i);
-        fscanf (fileIn, "%d", &i);
-    }
-
-    fclose(fileIn);
-
-    /* File writer */
     fileOut = fopen(outputFileName, "w");
 
     if(fileOut==NULL)
@@ -82,33 +72,55 @@ void testQueueCity()
         printf("%d\n",dequeueInt(getPathCity(firstCity(queue))));
 }
 
+void readInputFile(char* inputFileName)
+{
+    /* File reader */
+    FILE* fileIn;
+    int from = 0;
+    int to = 0;
+    
+    fileIn = fopen (inputFileName, "r");
+    fscanf (fileIn, "%d", &from);
+    fscanf (fileIn, "%d", &to);
+
+    while(!feof (fileIn))
+    {
+        enqueueInt(cityRoutes[from],to);
+        fscanf (fileIn, "%d", &from);
+        fscanf (fileIn, "%d", &to);
+    }
+
+    fclose(fileIn);
+}
+
 int main(int argc, char *argv[])
 {
+    /* Correcto number of parameters? */
     if(argc<2)
     {
         printf("Incorrect number of parameters!\n");
         return 1;
     }
-
     char* inputFileName  = argv[1];
     char* outputFileName = argv[2];
 
-    int size=5;
-    int* array = (int*)malloc(sizeof(int)*size);
-
-    array[0]=880394;
-    array[1]=50394;
-    array[2]=49394;
-    array[3]=230394;
-    array[4]=37394;
-
+    /* Initialization of cityRoutes */
+    cityRoutes = (QueueInt**)malloc(sizeof(QueueInt*)*maxNumberOfCities);
     int i;
-    for(i=0;i<size;i++) printf("%d ",array[i]);
-    printf("\n");
+    for(i=0; i<maxNumberOfCities; i++)
+        cityRoutes[i] = createQueueInt();
 
-    /*testFileIO(inputFileName,outputFileName);*/
-    /*testQueueInt();*/
-    /*testQueueCity();*/
+    /* Read input file */
+    readInputFile(inputFileName);
+
+    
+    int j;      
+    for(i=0; i<20; i++)
+    {
+        for(j=0; j<getSizeInt(cityRoutes[i]); j++)
+            printf("%d ",dequeueInt(cityRoutes[i]));
+        printf("\n");
+    }
 
     return 0;
 }

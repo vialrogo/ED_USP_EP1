@@ -135,7 +135,7 @@ int main(int argc, char *argv[])
 
     
     int j,tmp;      
-    for(i=0; i<10; i++)
+    for(i=0; i<200; i++)
     {
         tmp = getSizeInt(cityRoutes[i]);
         for(j=0; j<tmp; j++)

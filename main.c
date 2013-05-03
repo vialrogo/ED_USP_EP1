@@ -12,15 +12,33 @@ void writeOutputFile(char* outputFileName)
 {
    /* File writer */
     FILE* fileOut;
-    
+    int i,j,routeSize;
     fileOut = fopen(outputFileName, "w");
+    char str[3500]; /* Its more that the maximum poissible with 1000 cities*/ 
 
     if(fileOut==NULL)
     {
         printf("Cannot open the output file!\n");
     }
-
-    fputs("Hello World\n", fileOut);
+    else
+    {
+        for(i=0; i<maxNumberOfCities; i++)
+        {
+            routeSize = getSizeInt(cityRoutes[i]);
+            if(routeSize>0 || i==0)
+            {
+                sprintf(str,"Cidade %d %d ",i,routeSize);
+                fputs(str,fileOut);
+                for(j=0; j<routeSize; j++)
+                {
+                    sprintf(str,"%d ",dequeueInt(cityRoutes[i]));
+                    fputs(str,fileOut);
+                }
+                fputs("\n",fileOut);
+            }
+        }
+    }
+    
     fclose(fileOut);
 }
 
@@ -133,25 +151,10 @@ int main(int argc, char *argv[])
         visitedCities[i] = 0;
     }
 
-    /* Read input file */
     readInputFile(inputFileName);
-
     calculateMinimalRoutes();
-
+    writeOutputFile(outputFileName); 
     
-    int j,tmp;      
-    for(i=0; i<maxNumberOfCities; i++)
-    {
-        tmp = getSizeInt(cityRoutes[i]);
-
-        if(tmp>0 || i==0)
-        {
-            printf("Cidade %d %d ",i,tmp);
-            for(j=0; j<tmp; j++)
-                printf("%d ",dequeueInt(cityRoutes[i]));
-            printf("\n");
-        }
-    }
 
     /* Memory free */
 

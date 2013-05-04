@@ -1,0 +1,6 @@
+Cidade 1 1 
+Cidade 2 2 1 
+Cidade 16 1 
+Cidade 40 3 16 44 
+Cidade 44 2 16 
+Cidade 87 2 16 

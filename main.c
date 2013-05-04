@@ -41,7 +41,9 @@ void writeOutputFile(char* outputFileName)
         }
     }
     
+    /* Close file, and zering pointer*/
     fclose(fileOut);
+    fileOut=0;
 }
 
 void readInputFile(char* inputFileName)
@@ -130,6 +132,9 @@ void calculateMinimalRoutes()
         /* Free the currentCity after process it */
         free(currentCity);
     }
+
+    /* Free the queueOfCities after process it */
+    free(queueOfCities);
 }
 
 int main(int argc, char *argv[])
@@ -157,8 +162,11 @@ int main(int argc, char *argv[])
     calculateMinimalRoutes();
     writeOutputFile(outputFileName); 
     
-
     /* Memory free */
+    for(i=0; i<maxNumberOfCities; i++)
+        free(cityRoutes[i]);
+    free(cityRoutes);
+    free(visitedCities);
 
     return 0;
 }

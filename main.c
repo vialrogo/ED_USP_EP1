@@ -51,6 +51,10 @@ void writeOutputFile(char* outputFileName)
                         fputs(str,fileOut);
                     }
                 }
+                else
+                {
+                    fputs("INF",fileOut); /* When the rout is infinity (doesn't exist) */
+                }
                 fputs("\n",fileOut);
             }
         }
@@ -72,7 +76,7 @@ void readInputFile(char* inputFileName)
     fscanf (fileIn, "%d", &from);
     fscanf (fileIn, "%d", &to);
 
-    while(!feof (fileIn))
+    while(!feof (fileIn)) /* While o file still has numbers */
     {
         enqueueInt(cityRoutes[from],to);
         fscanf (fileIn, "%d", &from);

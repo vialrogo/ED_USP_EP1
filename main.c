@@ -36,14 +36,20 @@ void writeOutputFile(char* outputFileName)
             routeSize = getSizeInt(cityRoutes[i]);
             if(routeSize>0) /* removed || i==0 */
             {
-                sprintf(str,"Cidade %d %d ",i,routeSize);
+                sprintf(str,"Cidade %d ",i); /* Put the city id*/
                 fputs(str,fileOut);
 
-                dequeueInt(cityRoutes[i]); /* Delete the city 0 */
-                for(j=1; j<routeSize; j++) /* j=1 for dont put the city 0*/
+                if(visitedCities[i]==1) /* Only if exist path to the city*/
                 {
-                    sprintf(str,"%d ",dequeueInt(cityRoutes[i]));
+                    sprintf(str,"%d ",routeSize);
                     fputs(str,fileOut);
+
+                    dequeueInt(cityRoutes[i]); /* Delete the city 0 */
+                    for(j=1; j<routeSize; j++) /* j=1 for dont put the city 0*/
+                    {
+                        sprintf(str,"%d ",dequeueInt(cityRoutes[i]));
+                        fputs(str,fileOut);
+                    }
                 }
                 fputs("\n",fileOut);
             }

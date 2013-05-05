@@ -12,7 +12,7 @@
 
 typedef struct City City;
 
-/* Function definition*/
+/* Functions definition*/
 City* createCity(int idCityIn);
 int getIDCity(struct City*);
 QueueInt* getPathCity(struct City*);

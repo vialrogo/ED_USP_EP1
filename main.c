@@ -1,3 +1,12 @@
+/*
+ * main.c            File with the functions for read/write the input/output
+ *                   files, the method to calcule the minimun path from city 0
+ *                   to the others cities and main method with the calls to
+ *                   these functions.
+ * Create by:        Victor Alberto Romero Gonzalez
+ *
+ */
+
 #include <stdio.h>
 #include "queue_int.h"
 #include "queue_city.h"
@@ -158,6 +167,7 @@ int main(int argc, char *argv[])
         visitedCities[i] = 0;
     }
 
+    /* Call to the functions*/
     readInputFile(inputFileName);
     calculateMinimalRoutes();
     writeOutputFile(outputFileName); 

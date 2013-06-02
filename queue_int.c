@@ -17,20 +17,20 @@ typedef struct NodeInt
     struct NodeInt* next;
 }NodeInt;
 
-typedef struct QueueInt
+typedef struct _QueueInt
 {
     int size;
     NodeInt* head;
     NodeInt* tail;
 
-    void (*enqueueInt) (struct QueueInt*, int); /* Add a element to the end */
-    int  (*dequeueInt) (struct QueueInt*);      /* Remove and return the first element */
-    int  (*firstInt)   (struct QueueInt*);      /* Get the first element, but not remove */
-    int  (*getSizeInt) (struct QueueInt*);      /* Get a current size of a queue */
+    void (*enqueueInt) (struct _QueueInt*, int); /* Add a element to the end */
+    int  (*dequeueInt) (struct _QueueInt*);      /* Remove and return the first element */
+    int  (*firstInt)   (struct _QueueInt*);      /* Get the first element, but not remove */
+    int  (*getSizeInt) (struct _QueueInt*);      /* Get a current size of a queue */
     
-}QueueInt;
+}_QueueInt;
 
-void enqueueInt(struct QueueInt* queue, int element)
+void enqueueInt(struct _QueueInt* queue, int element)
 {
     /* Creating a new node*/
     NodeInt* newNode = (NodeInt*) malloc(sizeof(NodeInt));
@@ -46,14 +46,17 @@ void enqueueInt(struct QueueInt* queue, int element)
     queue->size++;
 }
 
-int dequeueInt(struct QueueInt* queue)
+int dequeueInt(struct _QueueInt* queue)
 {
+    NodeInt* oldHead;
+    int data;
+
     if(queue->size == 0) 
         printf("Tried to dequeu a empty queue, you must garant that this will not happen again\n");
 
     /* Get Data*/
-    NodeInt* oldHead = queue->head;
-    int data = oldHead->data;
+    oldHead = queue->head;
+    data = oldHead->data;
     
     /* Update a Queue*/
     queue->head = oldHead->next;
@@ -64,7 +67,7 @@ int dequeueInt(struct QueueInt* queue)
     return data;
 }
 
-int firstInt(struct QueueInt* queue)
+int firstInt(struct _QueueInt* queue)
 {
     if(queue->size == 0) 
         printf("Tried to get the first of a empty queue, you must garant that this will not happen again\n");
@@ -72,7 +75,7 @@ int firstInt(struct QueueInt* queue)
     return queue->head->data;
 }
 
-int getSizeInt(QueueInt* queue)
+int getSizeInt(struct _QueueInt* queue)
 {
     return queue->size;
 }

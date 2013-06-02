@@ -13,13 +13,13 @@
 #include <stdio.h>
 #include "city.h"
 
-typedef struct QueueCity QueueCity;
+typedef struct _QueueCity QueueCity;
 
 /* Function definition */
 QueueCity* createQueueCity();
-void  enqueueCity(struct QueueCity*, City*);
-City* dequeueCity(struct QueueCity*);
-City* firstCity  (struct QueueCity*);
-int   getSizeCity(struct QueueCity*);
+void  enqueueCity(struct _QueueCity*, City*);
+City* dequeueCity(struct _QueueCity*);
+City* firstCity  (struct _QueueCity*);
+int   getSizeCity(struct _QueueCity*);
 
 #endif

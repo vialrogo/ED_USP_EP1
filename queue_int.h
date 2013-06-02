@@ -12,13 +12,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-typedef struct QueueInt QueueInt;
+typedef struct _QueueInt QueueInt;
 
 /* Function definition */
 QueueInt* createQueueInt();
-void enqueueInt(struct QueueInt*, int);
-int  dequeueInt(struct QueueInt*);
-int  firstInt  (struct QueueInt*);
-int  getSizeInt(struct QueueInt*);
+void enqueueInt(struct _QueueInt*, int);
+int  dequeueInt(struct _QueueInt*);
+int  firstInt  (struct _QueueInt*);
+int  getSizeInt(struct _QueueInt*);
 
 #endif

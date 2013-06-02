@@ -7,29 +7,29 @@
 
 #include "city.h"
 
-typedef struct City
+typedef struct _City
 {
     int idCity;
     QueueInt* pathCity;
 
-    int       (*getIDCity)  (struct City*); /* Return the idCity */
-    QueueInt* (*getPathCity)(struct City*); /* Return the pathCity*/
+    int       (*getIDCity)  (struct _City*); /* Return the idCity */
+    QueueInt* (*getPathCity)(struct _City*); /* Return the pathCity*/
 
-}City;
+}_City;
 
-int getIDCity(struct City* city)
+int getIDCity(struct _City* city)
 {
     return city->idCity;
 }
 
-QueueInt* getPathCity(struct City* city)
+QueueInt* getPathCity(struct _City* city)
 {
     return city->pathCity;
 }
 
 City* createCity(int idCityIn)
 {
-    City* city     = (City*) malloc(sizeof(City));
+    City* city    = (City*) malloc(sizeof(City));
     city->idCity   = idCityIn;
     city->pathCity = createQueueInt();
     return city;

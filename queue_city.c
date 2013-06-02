@@ -18,20 +18,20 @@ typedef struct NodeCity
 
 }NodeCity;
 
-typedef struct QueueCity
+typedef struct _QueueCity
 {
     int size;
     NodeCity* head;
     NodeCity* tail;
 
-    void  (*enqueueCity) (struct QueueCity*, City*);/* Add a element to the end */
-    City* (*dequeueCity) (struct QueueCity*);       /* Remove and return the first element */
-    City* (*firstCity)   (struct QueueCity*);       /* Get the first element, but not remove */
-    int   (*getSizeCity) (struct QueueCity*);       /* Get the current size of the queue */
+    void  (*enqueueCity) (struct _QueueCity*, City*);/* Add a element to the end */
+    City* (*dequeueCity) (struct _QueueCity*);       /* Remove and return the first element */
+    City* (*firstCity)   (struct _QueueCity*);       /* Get the first element, but not remove */
+    int   (*getSizeCity) (struct _QueueCity*);       /* Get the current size of the queue */
 
-}QueueCity;
+}_QueueCity;
 
-void enqueueCity(struct QueueCity* queue, City* element)
+void enqueueCity(struct _QueueCity* queue, City* element)
 {
     /* Creating a new node*/
     NodeCity* newNode = (NodeCity*) malloc(sizeof(NodeCity));
@@ -47,14 +47,17 @@ void enqueueCity(struct QueueCity* queue, City* element)
     queue->size++;
 }
 
-City* dequeueCity(struct QueueCity* queue)
+City* dequeueCity(struct _QueueCity* queue)
 {
+    NodeCity* oldHead;
+    City* data; 
+
     if(queue->size == 0) 
         printf("Try to dequeu a empty queue, you must garant that this will not happen again\n");
 
     /* Get Data*/
-    NodeCity* oldHead = queue->head;
-    City* data = oldHead->data;
+    oldHead = queue->head;
+    data = oldHead->data;
     
     /* Update a Queue*/
     queue->head = oldHead->next;
@@ -65,7 +68,7 @@ City* dequeueCity(struct QueueCity* queue)
     return data;
 }
 
-City* firstCity(struct QueueCity* queue)
+City* firstCity(struct _QueueCity* queue)
 {
     if(queue->size == 0) 
         printf("Try to get the first of a empty queue, you must garant that this will not happen again\n");
@@ -73,7 +76,7 @@ City* firstCity(struct QueueCity* queue)
     return queue->head->data;
 }
 
-int getSizeCity(struct QueueCity* queue)
+int getSizeCity(struct _QueueCity* queue)
 {
     return queue->size;
 }

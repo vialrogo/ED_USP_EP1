@@ -10,11 +10,11 @@
 
 #include "queue_int.h"
 
-typedef struct City City;
+typedef struct _City City;
 
 /* Functions definition*/
 City* createCity(int idCityIn);
-int getIDCity(struct City*);
-QueueInt* getPathCity(struct City*);
+int getIDCity(struct _City*);
+QueueInt* getPathCity(struct _City*);
 
 #endif

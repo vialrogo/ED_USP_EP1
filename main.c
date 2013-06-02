@@ -22,8 +22,8 @@ void writeOutputFile(char* outputFileName)
    /* File writer */
     FILE* fileOut;
     int i,j,routeSize;
-    fileOut = fopen(outputFileName, "w");
     char str[3500]; /* Its more that the maximum poissible with 1000 cities*/ 
+    fileOut = fopen(outputFileName, "w");
 
     if(fileOut==NULL)
     {
@@ -90,10 +90,6 @@ void readInputFile(char* inputFileName)
 
 void calculateMinimalRoutes()
 {
-    /* Create a queue of cities*/
-    QueueCity* queueOfCities = createQueueCity();
-    enqueueCity(queueOfCities,createCity(0));
-
     /* Create a temporal variables*/
     int i,j,tmp;
     int numberOfNeighbors;
@@ -102,6 +98,11 @@ void calculateMinimalRoutes()
     int idCurrentCity;
     City* currentCity;
     QueueInt* neighbors;
+    City* newCity;
+
+    /* Create a queue of cities*/
+    QueueCity* queueOfCities = createQueueCity();
+    enqueueCity(queueOfCities,createCity(0));
 
     while(getSizeCity(queueOfCities)>0)
     {
@@ -120,7 +121,7 @@ void calculateMinimalRoutes()
             {
                 /* Create a new city*/
                 currentNeighbor = dequeueInt(neighbors);
-                City* newCity = createCity(currentNeighbor);
+                newCity = createCity(currentNeighbor);
                
                 /* Update the path of the new city*/
                 sizeOfCurrentPath = getSizeInt(getPathCity(currentCity));
@@ -158,19 +159,23 @@ void calculateMinimalRoutes()
 
 int main(int argc, char *argv[])
 {
+    char* inputFileName;
+    char* outputFileName;
+    int i;
+
     /* Correct number of parameters? */
     if(argc<2)
     {
         printf("Incorrect number of parameters!\n");
         return 1;
     }
-    char* inputFileName  = argv[1];
-    char* outputFileName = argv[2];
+    inputFileName  = argv[1];
+    outputFileName = argv[2];
 
     /* Initialization of cityRoutes and visitedCities*/
     cityRoutes =    (QueueInt**)malloc(sizeof(QueueInt*)*maxNumberOfCities);
     visitedCities = (short*)malloc(sizeof(short)*maxNumberOfCities);
-    int i;
+    
     for(i=0; i<maxNumberOfCities; i++)
     {
         cityRoutes[i] = createQueueInt();
